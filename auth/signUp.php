@@ -1,7 +1,5 @@
 <?php
-include '../functions/filter_request.php';
 include '../connect.php';
-echo 'kkkkkkkkkkkk';
 
 
 $userName = filterRequest('userName');

@@ -14,6 +14,7 @@ $option = array(
  try{
     $con= new PDO($dsn,$user,$pass,$option );
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'functions/filter_request.php';
 
  }catch(PDOException $e){
     echo "==========catch PDo Eror ========== ...$e"; 
