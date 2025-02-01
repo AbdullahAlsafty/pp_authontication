@@ -4,14 +4,14 @@ include '../connect.php';
 
 $title = filterPostRequest('notes_title');
 $subtitle = filterPostRequest('notes_suptitle');
-$userid = filterPostRequest('notes_user');
+$userid = filterPostRequest('notes_user_id');
 
-$std = $con->prepare("INSERT INTO `notes`( `notes_title`, `notes_suptitle`, `notes_user`) VALUES (' ?,? ,? )");
-   
+$std = $con->prepare("INSERT INTO `notes`( `notes_title`, `notes_suptitle`, `notes_user_id`) VALUES ( ?,? ,? )");
+   $std->execute(array($title,$subtitle,$userid));
 
-    $countRow = $std->rowCount(array($title,$subtitle,$userid));
+    $countRow = $std->rowCount();
     if($countRow>0){
-        $stmt = $con->prepare("SELECT * FROM `users` WHERE  `id`=?");
+        $stmt = $con->prepare("SELECT * FROM `notes` WHERE  `notes_user_id`=?");
         $stmt->execute(array($con->lastInsertId()));
         $rows =$stmt->fetch(PDO::FETCH_ASSOC);
       
