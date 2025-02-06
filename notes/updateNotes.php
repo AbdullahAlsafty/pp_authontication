@@ -3,14 +3,13 @@ include '../connect.php';
 
 
 
-$noteid = filterPostRequest('note_id');
-$userid = filterPostRequest('user_id');
-$noteTitle = filterPostRequest('noteTitle');
+ $noteid = filterPostRequest('note_id');
+$noteTitle = filterPostRequest('notes_title');
 $noteSubtitle = filterPostRequest('notes_subtitle');
 
 $std = $con->prepare("UPDATE `notes` SET `notes_title`=?,`notes_subtitle`=?
- WHERE  (`id`= ?) And `notes_user_id` = ? ");
-   $std->execute(array($noteTitle,$noteSubtitle,$noteid,$userid));
+ WHERE  (`id`= ?)  ");
+   $std->execute(array($noteTitle,$noteSubtitle,$noteid));
 
     $countRow = $std->rowCount();
     if($countRow>0){

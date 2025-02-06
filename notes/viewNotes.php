@@ -1,6 +1,6 @@
 <?php
 include '../connect.php';
-$user_id = filterPostRequest('notes_user_id');
+$user_id = filterPostRequest('user_id');
 
 $std = $con->prepare(
     "SELECT * From `notes` Where `notes_user_id` = ?");
