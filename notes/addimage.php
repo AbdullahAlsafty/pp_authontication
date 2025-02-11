@@ -3,8 +3,6 @@
 
 function uplodefile ($file){
 
-echo 'uuuuuuuuuuu';
-
   
     define("Mb",1048576);
     $errormessage  = [];
@@ -24,7 +22,6 @@ echo 'uuuuuuuuuuu';
     
     }
     if (isset($_FILES[$file ]) && $_FILES[$file]['error'] ==0){
-    print_r($_FILES[$file]);
      $imagname = $_FILES[$file]["name"];
      $tempname = $_FILES[$file]["tmp_name"];
      $imagesize = $_FILES[$file]["size"];
@@ -35,13 +32,12 @@ echo 'uuuuuuuuuuu';
      $allowext = ['jpg','png','gif',];
      
      
-     
      if (!empty($imagname)&&!in_array($ext,$allowext)){
      $errormessage[] = 'Error in extention';
      
      }
-     elseif (($imagesize >5* Mb)){
-         $errormessage[] = 'Error in size';
+     elseif (($imagesize >20* Mb)){
+         $errormessage[] = 'حجم الصورة اكبر من 20 ميجا ';
 
      }
     
@@ -51,19 +47,19 @@ echo 'uuuuuuuuuuu';
     $newimagename =$filecontent.'_'.$imagname;
     if (empty($errormessage)){
         $path = $dirctfolder."/" . $newimagename;
-     if (move_uploaded_file($tempname,$dirctfolder."/" . $newimagename.$imagname)){
+     if (move_uploaded_file($tempname,$dirctfolder."/" . $newimagename)){
          file_put_contents($counterfile,$filecontent+1);
-         echo json_encode(array("status"=>"success", "message"=>  "تم رفع الملف على السيرفر بنجاح"   ,"path"=>$path));
+        //  echo json_encode(array("status"=>"success", "message"=>  "تم رفع الملف على السيرفر بنجاح"   ,"path"=>$path));
           
         return array("status"=>"success", "message"=>  "تم رفع الملف على السيرفر بنجاح"   ,"path"=>$path,"imagename"=>$newimagename );
         }else {
-                echo json_encode(array("status"=>"fail", "message"=>"فشل اثناء عملية رفع الملف على السيرفر "));
-// return array("status"=>"fail", "message"=>"فشل اثناء عملية رفع الملف على السيرفر ");
+                // echo json_encode(array("status"=>"fail", "message"=>"فشل اثناء عملية رفع الملف على السيرفر "));
+return array("status"=>"faill", "message"=>"فشل اثناء عملية رفع الملف على السيرفر ");
 
              }
     }else{
-        echo json_encode(array("status"=>"fail", "message"=>array($errormessage)));
-        // return array("status"=>"fail", "message"=>array($errormessage));
+        // echo json_encode(array("status"=>"fail", "message"=>array($errormessage)));
+        return array("status"=>"faill", "message"=>array($errormessage));
 
     }
     
@@ -72,8 +68,8 @@ echo 'uuuuuuuuuuu';
     }else{
 
 
-        echo json_encode(array("status"=>"fail", "message"=>"  لم يتم وضع اي ملف للتحميل او ان الملف به ايرورز "));
-        // return array("status"=>"fail", "message"=>"  لم يتم وضع اي ملف للتحميل او ان الملف به ايرورز ");
+        // echo json_encode(array("status"=>"fail", "message"=>"  لم يتم وضع اي ملف للتحميل او ان الملف به ايرورز "));
+        return array("status"=>"fail", "message"=>"  لم يتم وضع اي ملف للتحميل او ان الملف به ايرورز ");
 
     }
     

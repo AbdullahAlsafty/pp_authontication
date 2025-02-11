@@ -4,9 +4,8 @@ include '../connect.php';
 include "deletimage.php";
 
 $noteid = filterPostRequest('note_id');
-$filename = filterPostRequest('imagename');
+$imagename = filterPostRequest('imagename');
  
-deleteimage('imagename');
 
 
 $std = $con->prepare("DELETE FROM `notes` WHERE `id` =? ");
@@ -14,11 +13,9 @@ $std = $con->prepare("DELETE FROM `notes` WHERE `id` =? ");
 
     $countRow = $std->rowCount();
     if($countRow>0){
-        // $stmt = $con->prepare("SELECT * FROM `notes` WHERE  `id`= ?");
-        // $stmt->execute(array($noteid));
-        // $rows =$stmt->fetch(PDO::FETCH_ASSOC);
+    $deletimagereturn =  deleteimage('imagename');
       
-        echo json_encode(array('Status'=>'Success','Row Coun'=>$countRow));
+        echo json_encode(array('Status'=>'Success delet note','delet image status'=>$deletimagereturn));
     
     }else {
-        echo json_encode(array('Status'=>'Failure','Row Coun'=>$countRow));}
+        echo json_encode(array('Status'=>'Failure delet note','delet image status'=>"لم يتم تنذيذ دالة حذف الصور لانه لم يتم تنفيذ دالة حذف النوت اصلا "));}
